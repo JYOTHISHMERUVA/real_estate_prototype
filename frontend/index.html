@@ -1,0 +1,33 @@
+<!doctype html>
+<html lang='en'>
+<head>
+  <meta charset='utf-8' />
+  <meta name='viewport' content='width=device-width, initial-scale=1' />
+  <title>Real Estate Prototype</title>
+  <link rel='stylesheet' href='styles.css'>
+</head>
+<body>
+  <header>
+    <h1>Real Estate Listings</h1>
+    <button id='show-add'>+ Add Property</button>
+  </header>
+  <main>
+    <section id='add-form' class='hidden'>
+      <h2>Add Property</h2>
+      <form id='property-form'>
+        <input name='title' placeholder='Title' required />
+        <input name='location' placeholder='Location' required />
+        <input name='price' type='number' placeholder='Price' required />
+        <select name='type'><option>Rent</option><option>Sale</option></select>
+        <textarea name='description' placeholder='Short description'></textarea>
+        <button type='submit'>Create</button>
+      </form>
+    </section>
+    <section id='listings'>
+      <h2>Listings</h2>
+      <div id='cards'></div>
+    </section>
+  </main>
+  <script src='app.js'></script>
+</body>
+</html>

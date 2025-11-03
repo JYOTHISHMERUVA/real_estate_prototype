@@ -1,0 +1,48 @@
+PRAGMA foreign_keys = ON;
+CREATE TABLE IF NOT EXISTS users (
+  id INTEGER PRIMARY KEY AUTOINCREMENT,
+  name TEXT NOT NULL,
+  email TEXT UNIQUE NOT NULL,
+  role TEXT NOT NULL DEFAULT 'user',
+  created_at DATETIME DEFAULT CURRENT_TIMESTAMP
+);
+CREATE TABLE IF NOT EXISTS properties (
+  id INTEGER PRIMARY KEY AUTOINCREMENT,
+  owner_id INTEGER,
+  title TEXT NOT NULL,
+  location TEXT NOT NULL,
+  price REAL NOT NULL,
+  type TEXT NOT NULL DEFAULT 'Rent',
+  description TEXT,
+  status TEXT NOT NULL DEFAULT 'available',
+  created_at DATETIME DEFAULT CURRENT_TIMESTAMP,
+  FOREIGN KEY(owner_id) REFERENCES users(id) ON DELETE SET NULL
+);
+CREATE TABLE IF NOT EXISTS bookings (
+  id INTEGER PRIMARY KEY AUTOINCREMENT,
+  user_id INTEGER,
+  property_id INTEGER NOT NULL,
+  visit_date DATETIME,
+  status TEXT DEFAULT 'pending',
+  created_at DATETIME DEFAULT CURRENT_TIMESTAMP,
+  FOREIGN KEY(user_id) REFERENCES users(id),
+  FOREIGN KEY(property_id) REFERENCES properties(id)
+);
+CREATE TABLE IF NOT EXISTS payments (
+  id INTEGER PRIMARY KEY AUTOINCREMENT,
+  user_id INTEGER,
+  property_id INTEGER,
+  amount REAL NOT NULL,
+  currency TEXT DEFAULT 'INR',
+  status TEXT DEFAULT 'completed',
+  created_at DATETIME DEFAULT CURRENT_TIMESTAMP
+);
+CREATE TABLE IF NOT EXISTS maintenance (
+  id INTEGER PRIMARY KEY AUTOINCREMENT,
+  property_id INTEGER,
+  tenant_id INTEGER,
+  issue TEXT NOT NULL,
+  status TEXT DEFAULT 'open',
+  created_at DATETIME DEFAULT CURRENT_TIMESTAMP,
+  FOREIGN KEY(property_id) REFERENCES properties(id)
+);
